@@ -7,6 +7,6 @@ GM3 Mall Map Autocomplete & Pathfindin
 
 | Name    | Student ID   | Class  |
 |---------|--------------|--------|
-| Karina  | 50252210     | DAA-K  |
-| Audrey  | 50252210     | DAA-K  |
+| Karina  | 50252210     | DAA-D  |
+| Audrey  | 50252210     | DAA-D  |
 | Pelangi | 5025221051   | DAA-K  |
