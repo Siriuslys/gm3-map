@@ -1,7 +1,7 @@
 # DAA Quiz 2
 
 ## Project Title
-GM3 Mall Map Autocomplete & Pathfindin
+GM3 Mall Pathfinder
 
 ## Team Members
 
