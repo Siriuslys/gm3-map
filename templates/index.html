@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Galaxy Mall 3 Maps</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
+    <script src="static/data/lantai_G.geojson"></script>
+    <script src="static/data/lantai_1.geojson"></script>
+    <script src="static/data/lantai_2.geojson"></script>
+    <script src="static/data/lantai_3.geojson"></script>
+    <script src="static/data/lantai_4.geojson"></script>
+    <script src="static/data/bg.geojson"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            overflow: hidden; 
+        }
+
+        .navbar-container {
+            background-color: black;
+            color: white;
+            height: 60px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030; 
+        }
+        .navbar-container h1 {
+            font-weight: 600; 
+            font-size: 1.5rem; 
+        }
+
+        #map-container {
+            width: 100%;
+            height: 100vh; 
+            padding-top: 60px; 
+            box-sizing: border-box;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%; 
+            background-color: #f0f2f5; 
+        }
+
+        .control-panel {
+            position: absolute;
+            top: calc(60px + 1rem); 
+            left: 1rem;
+            width: 360px; 
+            max-height: calc(100vh - 60px - 2rem); 
+            background-color: #ffffff;
+            border-radius: 0.75rem; 
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); 
+            z-index: 1020; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+        
+        .form-container {
+            padding: 1.25rem; 
+            border-bottom: 1px solid #e9ecef; 
+        }
+
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 0.75rem; 
+        }
+
+        .input-group-custom .form-control {
+            border-radius: 0.5rem; 
+            padding-left: 2.5rem; 
+            border: 1px solid #ced4da;
+            height: 45px; 
+            font-size: 0.9rem; 
+        }
+        .input-group-custom .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); 
+        }
+
+
+        .input-group-custom .input-icon {
+            position: absolute;
+            left: 0.875rem; 
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d; 
+            font-size: 1rem; 
+        }
+
+
+        .result-box {
+            position: absolute; 
+            background-color: white;
+            z-index: 1050; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12); 
+            border-radius: 0.5rem; 
+            width: 100%; 
+            margin-top: 0.125rem; 
+        }
+        .result-box ul {
+            border-top: none; 
+            padding: 0;
+            margin:0;
+            list-style: none;
+            max-height: 180px; 
+            overflow-y: auto;
+        }
+        .result-box ul li{
+            padding: 0.6rem 1rem; 
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0; 
+            font-size: 0.85rem; 
+        }
+        .result-box ul li:last-child {
+            border-bottom: none;
+        }
+        .result-box ul li:hover {
+            background-color: #f8f9fa; 
+        }
+
+        .scrollable-content {
+            flex-grow: 1;
+            overflow-y: auto; 
+        }
+
+        #route-summary {
+            padding: 1rem; 
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        #route-summary b {
+            font-size: 1em; 
+            color: #212529; 
+            font-weight: 600;
+        }
+         #route-summary small {
+            font-size: 0.825rem; 
+            color: #495057; 
+        }
+        
+        .choice-box {
+            padding: 0.6rem 1rem; 
+        }
+        .choice-box .btn {
+            border-radius: 0.5rem; 
+            font-weight: 500;
+            font-size: 0.85rem; 
+            padding: 0.4rem 0.8rem; 
+            display: flex; /* Untuk ikon dan teks sejajar */
+            align-items: center;
+            justify-content: center;
+        }
+        .choice-box .btn .fas { /* Styling untuk ikon di dalam tombol */
+            margin-right: 0.3rem;
+        }
+
+
+        .path-box ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+        .path-box ul li {
+            padding: 0.75rem 1rem; 
+            border-bottom: 1px solid #f0f0f0; 
+        }
+        .path-box ul li:last-child {
+            border-bottom: none; 
+        }
+        .path-box ul li .location-name { 
+            font-size: 0.9em; 
+            font-weight: 500;
+            color: #212529;
+            display: block;
+        }
+        .path-box ul li .location-floor { 
+            color: #6c757d;
+            font-size: 0.75rem; 
+            display: block; 
+            margin-top: 0.05rem;
+        }
+        .path-box ul li .location-meta {
+            color: #6c757d;
+            font-size: 0.75rem; 
+        }
+
+        .btn-search-custom { 
+            background-color: #000000; 
+            color: white;
+            border-color: #000000;
+            border-radius: 0.5rem; 
+            font-weight: 500;
+            height: 45px; 
+            font-size: 0.95rem; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-search-custom:hover, .btn-search-custom:focus {
+            background-color: #232323; 
+            border-color: #232323;
+            color: white;
+        }
+        .btn-search-custom .fa-search {
+            margin-right: 0.4rem; 
+        }
+
+        /* Media Queries untuk Responsif */
+        @media (max-width: 768px) { /* Untuk tablet dan di bawahnya */
+            .control-panel {
+                width: calc(100% - 2rem); /* Lebar penuh dikurangi margin */
+                left: 1rem;
+                right: 1rem;
+                top: calc(60px + 0.5rem); /* Lebih dekat ke navbar */
+                max-height: 50vh; /* Batasi tinggi agar peta tetap terlihat */
+            }
+            .navbar-container h1 {
+                font-size: 1.3rem; /* Perkecil judul navbar */
+            }
+        }
+
+        @media (max-width: 480px) { /* Untuk mobile */
+            .form-container {
+                padding: 1rem;
+            }
+            .input-group-custom .form-control {
+                height: 40px;
+                font-size: 0.85rem;
+            }
+            .btn-search-custom {
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            #route-summary {
+                padding: 0.75rem;
+            }
+            #route-summary b {
+                font-size: 0.9em;
+            }
+            #route-summary small {
+                font-size: 0.75rem;
+            }
+            .path-box ul li {
+                padding: 0.6rem 0.75rem;
+            }
+             .choice-box .btn {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.7rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <h1>Galaxy Mall 3 Maps</h1>
+    </div>
+
+    <div id="map-container">
+        <div id="map">
+            </div>
+    </div>
+
+    <div class="control-panel">
+        <div class="form-container">
+          <form id="data-form">
+            <div class="input-group-custom">
+              <span class="input-icon"><i class="fas fa-circle" style="font-size: 0.7em;"></i></span> 
+              <input type="text" class="form-control" id="user-data-1" autocomplete="off" placeholder="Put your current location" required>
+              <div class="result-box" id="result-box-1" style="display:none;"></div>
+            </div>
+
+            <div class="input-group-custom">
+              <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+              <input type="text" class="form-control" id="user-data-2" autocomplete="off" placeholder="Put your destination" required>
+              <div class="result-box" id="result-box-2" style="display:none;"></div>
+            </div>
+
+            <div class="d-grid ">
+                <button type="submit" class="btn btn-search-custom w-100">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="scrollable-content">
+            <div id="route-summary">
+                </div>
+            <div class="choice-box" style="display:none;">
+                </div>
+            <div class="path-box">
+                </div>
+        </div>
+    </div>
+
+    <script src="static/js/autocomplete.js"></script>
+    <script>
+        let map;
+
+        function getFloorDisplayName(levelIndex) {
+            if (levelIndex === 0) return 'G';
+            if (levelIndex === -1) return ''; 
+            return levelIndex.toString();
+        }
+
+        function updateMap(data, data_goal, data_start){
+            let rute = data.rute;
+            
+            console.log("Updating map with route:", rute);
+            if (map && map.remove) {
+                map.off();
+                map.remove();
+            }
+            map = L.map('map', {
+                zoomControl: false 
+            }).setView([-7.27650430356789, 112.78022015113328], 19);
+            
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 25 
+            });
+            osm.addTo(map);
+
+            var pin_icon = L.icon({
+                iconUrl: "static/data/pin.png", 
+                iconSize:     [30, 30], 
+                iconAnchor:   [15, 30], 
+            });
+             var destination_icon = L.icon({ 
+                iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', 
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+                shadowSize: [41, 41]
+            });
+
+            let dasar = L.geoJSON(base, { style: { "color": "#ffffff", "weight": 0, "fillOpacity": 1 } });
+            let denah = [
+                L.geoJSON(lantai_G, { style: { "color": "#CBD5E1", "weight": 1, "fillOpacity": 0.3 }, onEachFeature: function (f, l) { if (f.properties.name) l.bindPopup(f.properties.name); } }),
+                L.geoJSON(lantai_1, { style: { "color": "#CBD5E1", "weight": 1, "fillOpacity": 0.3 }, onEachFeature: function (f, l) { if (f.properties.name) l.bindPopup(f.properties.name); } }),
+                L.geoJSON(lantai_2, { style: { "color": "#CBD5E1", "weight": 1, "fillOpacity": 0.3 }, onEachFeature: function (f, l) { if (f.properties.name) l.bindPopup(f.properties.name); } }),
+                L.geoJSON(lantai_3, { style: { "color": "#CBD5E1", "weight": 1, "fillOpacity": 0.3 }, onEachFeature: function (f, l) { if (f.properties.name) l.bindPopup(f.properties.name); } }),
+                L.geoJSON(lantai_4, { style: { "color": "#CBD5E1", "weight": 1, "fillOpacity": 0.3 }, onEachFeature: function (f, l) { if (f.properties.name) l.bindPopup(f.properties.name); } })
+            ];
+
+            let polyline = [];
+            for (let i = 0; i < 5; i++){
+                polyline[i] = L.polyline(rute[i], { color: '#000000', weight: 4, opacity: 0.8 }); 
+            }
+
+            let lantaiLayers = [];
+            for (let i = 0; i < 5; i++){
+                lantaiLayers[i] = L.layerGroup([osm, dasar, denah[i], polyline[i]]);
+            }
+            
+            if (data_start && data_start.length === 3 && data_start[2] !== -1) {
+                lantaiLayers[data_start[2]].addLayer(L.marker([data_start[0], data_start[1]], {icon: pin_icon}).bindPopup("Starting Point"));
+            }
+            if (data_goal && data_goal.length === 3 && data_goal[2] !== -1) {
+                 lantaiLayers[data_goal[2]].addLayer(L.marker([data_goal[0], data_goal[1]], {icon: destination_icon}).bindPopup("Destination"));
+            }
+            
+            let baseLayers = {
+                "GF":lantaiLayers[0], "L1":lantaiLayers[1], "L2":lantaiLayers[2], "L3":lantaiLayers[3], "L4":lantaiLayers[4],
+            };
+
+            L.control.layers(baseLayers, null, { position: 'bottomright', collapsed: true }).addTo(map); 
+            
+            if (data_start && data_start.length === 3 && data_start[2] !== -1) {
+                map.addLayer(lantaiLayers[data_start[2]]);
+            } else if (data_goal && data_goal.length === 3 && data_goal[2] !== -1) {
+                 map.addLayer(lantaiLayers[data_goal[2]]);
+            } else {
+                map.addLayer(lantaiLayers[0]);
+            }
+        };
+
+        let blank_map_data = { "rute": [[], [], [], [], []], "dur": 0, "path": [] };
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMap(blank_map_data, [0,0,-1], [0,0,-1]);
+        });
+
+        document.getElementById("data-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            let userData1 = document.getElementById("user-data-1").value;
+            let userData2 = document.getElementById("user-data-2").value;
+            
+            document.getElementById("result-box-1").style.display = 'none';
+            document.getElementById("result-box-2").style.display = 'none';
+
+            if (userData1 && userData2 && userData1 !== userData2) {
+                 sendDataToPython([userData1, userData2]);
+            } else if (userData1 === userData2 && userData1 !== "") {
+                const routeSummary = document.getElementById("route-summary");
+                const pathBox = document.querySelector(".path-box");
+                const choiceBox = document.querySelector(".choice-box");
+                
+                choiceBox.innerHTML = '';
+                choiceBox.style.display = 'none';
+                pathBox.innerHTML = '';
+                routeSummary.innerHTML = `<b>Lokasi awal dan tujuan sama.</b><br><small>Tidak ada rute yang perlu ditampilkan.</small>`;
+                updateMap(blank_map_data, [0,0,-1], [0,0,-1]); 
+            }
+        });
+        
+        function sendDataToPython(data_to_send) {
+            fetch("/process_data", {
+                method: "POST",
+                body: JSON.stringify({ data: data_to_send }),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.json())
+            .then(data_received => {
+                console.log("Data from Python:", data_received);
+                const choiceBox = document.querySelector(".choice-box");
+                const routeSummary = document.getElementById("route-summary");
+                const pathBox = document.querySelector(".path-box");
+
+                choiceBox.innerHTML = '';
+                choiceBox.style.display = 'none'; 
+                routeSummary.innerHTML = '';
+                pathBox.innerHTML = '';
+                
+                document.getElementById("user-data-1").blur(); 
+                document.getElementById("user-data-2").blur();
+
+                if (!data_received || (!data_received.eskalator.path && !data_received.lift.path) || 
+                    (data_received.eskalator.path && data_received.eskalator.path.length === 0 && 
+                     data_received.lift.path && data_received.lift.path.length === 0) ) {
+                    routeSummary.innerHTML = `<b>Rute tidak ditemukan.</b><br><small>Mohon periksa kembali lokasi awal dan tujuan Anda.</small>`;
+                    updateMap(blank_map_data, data_received.goal, data_received.start); 
+                    return;
+                }
+
+                if (data_received.level) { 
+                    const duration = data_received.eskalator.dur;
+                    const steps = calculateTotalSteps(duration, data_received.eskalator.path, "eskalator", 30); 
+                    const floorName = getFloorDisplayName(data_received.start[2]);
+                    routeSummary.innerHTML = `<b>${duration} detik (${steps} langkah)</b><br><small>Perkiraan waktu menggunakan rute tercepat di lantai ${floorName}.</small>`;
+                    updateMap(data_received.eskalator, data_received.goal, data_received.start);
+                    displayPath(data_received.eskalator.path, "eskalator");
+                } else { 
+                    choiceBox.style.display = 'block';
+                    routeSummary.innerHTML = `<small>Anda berada di lantai yang berbeda dengan tujuan. Silakan pilih eskalator atau lift.</small>`;
+                    displayChoice(data_received);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching or processing data:", error);
+                document.getElementById("route-summary").innerHTML = `<b>Terjadi kesalahan saat mencari rute.</b><br><small>Silakan coba lagi.</small>`;
+            });
+        }
+
+        function displayChoice(data) {
+            const choicesBox = document.querySelector(".choice-box");
+            choicesBox.innerHTML = ''; 
+
+            const eskaDuration = data.eskalator.dur;
+            const liftDuration = data.lift.dur;
+
+            const container = document.createElement("div");
+            container.className = "d-flex justify-content-around";
+
+            const eskaButton = document.createElement("button");
+            eskaButton.className = "btn btn-outline-dark me-1 flex-fill"; 
+            eskaButton.innerHTML = `<i class="fas fa-walking"></i> Eskalator (${eskaDuration}d)`; // Menggunakan ikon walking untuk eskalator
+            eskaButton.onclick = function() {
+                selectEska(data);
+                choicesBox.style.display = 'none'; 
+            };
+            container.appendChild(eskaButton);
+
+            const liftButton = document.createElement("button");
+            liftButton.className = "btn btn-outline-dark ms-1 flex-fill"; 
+            liftButton.innerHTML = `<i class="fas fa-elevator"></i> Lift (${liftDuration}d)`; // Menggunakan ikon elevator untuk lift
+            liftButton.onclick = function() {
+                selectLift(data);
+                choicesBox.style.display = 'none';
+            };
+            container.appendChild(liftButton);
+            choicesBox.appendChild(container);
+        }
+        
+        function calculateTotalSteps(total_duration, path_segments, fixed_time_keyword_to_exclude, fixed_time_value) {
+            let walking_duration = total_duration;
+            if (path_segments) {
+                 path_segments.forEach(p_item => {
+                    if (p_item[0].toLowerCase().includes(fixed_time_keyword_to_exclude.toLowerCase()) && p_item[1] === fixed_time_value) {
+                        walking_duration -= fixed_time_value; 
+                    }
+                });
+            }
+            return Math.max(0, Math.round(walking_duration * 2)); 
+        }
+
+        function selectEska(data) {
+            const total_duration_eska = data.eskalator.dur;
+            const calculated_steps_eska = calculateTotalSteps(total_duration_eska, data.eskalator.path, "eskalator", 30);
+
+            document.getElementById("route-summary").innerHTML = `<b>${total_duration_eska} detik (${calculated_steps_eska} langkah)</b><br><small>Perkiraan waktu via eskalator dari lantai ${getFloorDisplayName(data.start[2])} ke ${getFloorDisplayName(data.goal[2])}.</small>`;
+            updateMap(data.eskalator, data.goal, data.start);
+            displayPath(data.eskalator.path, "eskalator");
+        }
+
+        function selectLift(data) {
+            const total_duration_lift = data.lift.dur;
+            const calculated_steps_lift = calculateTotalSteps(total_duration_lift, data.lift.path, "lift", 9);
+            
+            document.getElementById("route-summary").innerHTML = `<b>${total_duration_lift} detik (${calculated_steps_lift} langkah)</b><br><small>Perkiraan waktu via lift dari lantai ${getFloorDisplayName(data.start[2])} ke ${getFloorDisplayName(data.goal[2])}.</small>`;
+            updateMap(data.lift, data.goal, data.start);
+            displayPath(data.lift.path, "lift");
+        }
+
+        function displayPath(path_segments, transport_mode = "walk"){ 
+            const pathsBox = document.querySelector(".path-box");
+            pathsBox.innerHTML = ''; 
+
+            if (!path_segments || path_segments.length === 0) {
+                pathsBox.innerHTML = "<ul><li>Tidak ada detail rute.</li></ul>";
+                return;
+            }
+            
+            const filtered_path_segments = path_segments.filter((item, index) => !(index === 0 && item[1] === 0));
+
+            const content = filtered_path_segments.map((item, index) => {
+                const tempat = item[0]; 
+                const segment_weight = item[1]; 
+                let level_idx = item[2]; 
+                let level_display = getFloorDisplayName(level_idx);
+
+                if (tempat.length <= 2 && tempat.match(/^[a-zA-Z]+$/) && !tempat.match(/[0-9]/)) {
+                    return ''; 
+                }
+
+                let displayText;
+                let locationMeta = ""; 
+
+                if (tempat.toLowerCase().includes("eskalator") && segment_weight === 30) {
+                    let targetLevelDisplay = "";
+                    const eskaParts = tempat.split(" "); 
+                    if (eskaParts.length > 1 && eskaParts[1].length >= 2) {
+                        let currentLevelChar = level_display.toString(); 
+                        let connected1 = eskaParts[1][0].toString(); 
+                        let connected2 = eskaParts[1][1].toString(); 
+                        if (currentLevelChar.toUpperCase() === connected1.toUpperCase()) targetLevelDisplay = getFloorDisplayName(parseInt(connected2));
+                        else if (currentLevelChar.toUpperCase() === connected2.toUpperCase()) targetLevelDisplay = getFloorDisplayName(parseInt(connected1));
+                        else targetLevelDisplay = getFloorDisplayName(parseInt(eskaParts[1][1])); 
+                    }
+                    displayText = `<span class="location-name">Eskalator</span> <span class="location-floor">Lantai ${level_display} (Menuju Lantai ${targetLevelDisplay || 'Berikutnya'})</span>`;
+                } else if (tempat.toLowerCase().includes("lift") && segment_weight === 9) {
+                     displayText = `<span class="location-name">Lift</span> <span class="location-floor">Tiba di Lantai ${level_display}</span>`;
+                } else {
+                    let distance_m = segment_weight; 
+                    locationMeta = `(${distance_m.toFixed(0)}m)`;
+                    displayText = `<span class="location-name">${tempat} <span class="location-meta">${locationMeta}</span></span> <span class="location-floor">Lantai ${level_display}</span>`;
+                }
+                return `<li>${displayText}</li>`;
+            });
+            
+            pathsBox.innerHTML = "<ul>" + content.filter(c => c !== '').join('') + "</ul>";
+        }
+    </script>
+</body>
+</html>
