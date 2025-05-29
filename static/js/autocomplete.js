@@ -22,14 +22,13 @@ let availableKeywords = [
     'Pintu Keluar 9',
     'Axel Vinesse',
     'Kopi Kenangan',
-    'Pintu Keluar X', //lupa pintu keluar brp
+    'Pintu Keluar X',
     'Venchi',
     'Loccitane',
     'Marquine',
     'Toilet Lantai G',
 
     //lantai 1
-
     'Uniqlo',
     'Amarissa',
     'Bridges Optical',
@@ -40,7 +39,7 @@ let availableKeywords = [
     'LockNLock',
     'Miniso',
     'Carla',
-    'Parkiran', //lupa parkiran yang mana
+    'Parkiran',
     'Urban & Co',
     'Koi The',
     'Dr. Specs',
@@ -130,100 +129,122 @@ let availableKeywords = [
     'Toilet Lantai 4'
 ];
 
-const resultsBox = document.querySelector(".result-box");
+const resultsBox1 = document.getElementById("result-box-1");
+const resultsBox2 = document.getElementById("result-box-2");
 const pathBox = document.querySelector(".path-box");
 const choiceBox = document.querySelector(".choice-box");
-const ket = document.querySelector(".keterangan");
 const input1 = document.getElementById("user-data-1");
 const input2 = document.getElementById("user-data-2");
-const dur = document.getElementById("duration");
-const step = document.getElementById("step");
 
+// Hide result boxes when clicking outside
 document.body.addEventListener("click", function(event) {
-    if (!resultsBox.contains(event.target)) {
-        resultsBox.innerHTML = ''; 
+    if (!resultsBox1.contains(event.target) && !input1.contains(event.target)) {
+        resultsBox1.style.display = 'none';
+    }
+    if (!resultsBox2.contains(event.target) && !input2.contains(event.target)) {
+        resultsBox2.style.display = 'none';
     }
 });
 
-
+// Input 1 autocomplete
 input1.onkeyup = function(){
     pathBox.innerHTML = '';
     choiceBox.innerHTML = '';
-    ket.innerHTML = '';
-    dur.innerHTML = '';
-    step.innerHTML = '';
+    const routeSummary = document.getElementById("route-summary");
+    if (routeSummary) routeSummary.innerHTML = '';
 
     let result = [];
     let input = input1.value;
+    
     if (input.length){
         result = availableKeywords.filter((keyword) => {
             return keyword.toLowerCase().includes(input.toLowerCase());
         });
-        console.log(result);
+        console.log("Input 1 results:", result);
     }
+    
     display1(result);
 
     if (!result.length){
-        resultsBox.innerHTML = '';
+        resultsBox1.style.display = 'none';
     }
 }
 
 function display1(result){
+    if (result.length === 0) {
+        resultsBox1.style.display = 'none';
+        return;
+    }
+
     const content = result.map((list) => {
-        return "<li onclick = 'selectInput1(this)' class=''>" + list + "</li>";
+        return "<li onclick='selectInput1(this)'>" + list + "</li>";
     });
 
-    resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+    resultsBox1.innerHTML = "<ul>" + content.join('') + "</ul>";
+    resultsBox1.style.display = 'block';
 }
 
 function selectInput1(list){
     const parser = new DOMParser();
     const decodedText = parser.parseFromString(list.innerHTML, 'text/html').body.textContent;
-    console.log(decodedText);
+    console.log("Selected input 1:", decodedText);
 
     input1.value = decodedText;
-    resultsBox.innerHTML = '';
+    resultsBox1.style.display = 'none';
 }
 
+// Input 2 autocomplete  
 input2.onkeyup = function(){
     pathBox.innerHTML = '';
     choiceBox.innerHTML = '';
-    ket.innerHTML = '';
-    dur.innerHTML = '';
-    step.innerHTML = '';
+    const routeSummary = document.getElementById("route-summary");
+    if (routeSummary) routeSummary.innerHTML = '';
 
     let result = [];
     let input = input2.value;
+    
     if (input.length){
         result = availableKeywords.filter((keyword) => {
             return keyword.toLowerCase().includes(input.toLowerCase());
         });
-        console.log(result);
+        console.log("Input 2 results:", result);
     }
+    
     display2(result);
 
     if (!result.length){
-        resultsBox.innerHTML = '';
+        resultsBox2.style.display = 'none';
     }
 }
 
 function display2(result){
+    if (result.length === 0) {
+        resultsBox2.style.display = 'none';
+        return;
+    }
+
     const content = result.map((list) => {
-        return "<li onclick = 'selectInput2(this)' class=''>" + list + "</li>";
+        return "<li onclick='selectInput2(this)'>" + list + "</li>";
     });
 
-    resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+    resultsBox2.innerHTML = "<ul>" + content.join('') + "</ul>";
+    resultsBox2.style.display = 'block';
 }
 
 function selectInput2(list){
     const parser = new DOMParser();
     const decodedText = parser.parseFromString(list.innerHTML, 'text/html').body.textContent;
-    console.log(decodedText);
+    console.log("Selected input 2:", decodedText);
 
     input2.value = decodedText;
-    resultsBox.innerHTML = '';
+    resultsBox2.style.display = 'none';
 }
 
-resultsBox.addEventListener("click", function(event) {
+// Prevent result boxes from closing when clicked
+resultsBox1.addEventListener("click", function(event) {
+    event.stopPropagation();
+});
+
+resultsBox2.addEventListener("click", function(event) {
     event.stopPropagation();
 });

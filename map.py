@@ -8,7 +8,8 @@ class Graph:
 
     # Function to add a vertex
     def addVertex(self, vertex):
-        self.vertices.append(vertex)
+        if vertex not in self.vertices:
+            self.vertices.append(vertex)
 
     # Function to add an edge with a weight
     def addEdge(self, start, end, weight):
