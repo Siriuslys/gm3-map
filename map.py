@@ -1879,9 +1879,89 @@ def process_data():
             "path": path_eska
         }
 
+        ################## Elevator ##################
+        # Remove edges that connect escalators
+        g.removeEdge("eskalator 1G 3", "eskalator G1 3") 
+        g.removeEdge("eskalator G1 3", "eskalator 1G 3") 
+        g.removeEdge("eskalator G1 1", "eskalator 1G 1") 
+        g.removeEdge("eskalator 1G 1", "eskalator G1 1") 
+        g.removeEdge("eskalator G1 2", "eskalator 1G 2") 
+        g.removeEdge("eskalator 1G 2", "eskalator G1 2") 
+        g.removeEdge("eskalator 12 1", "eskalator 21 1") 
+        g.removeEdge("eskalator 21 1", "eskalator 12 1") 
+        g.removeEdge("eskalator 12 2", "eskalator 21 2") 
+        g.removeEdge("eskalator 21 2", "eskalator 12 2") 
+        g.removeEdge("eskalator 12 3", "eskalator 21 3") 
+        g.removeEdge("eskalator 21 3", "eskalator 12 3") 
+        g.removeEdge("eskalator 23 1", "eskalator 32 1") 
+        g.removeEdge("eskalator 32 1", "eskalator 23 1") 
+        g.removeEdge("eskalator 23 2", "eskalator 32 2") 
+        g.removeEdge("eskalator 32 2", "eskalator 23 2") 
+        g.removeEdge("eskalator 23 3", "eskalator 32 3") 
+        g.removeEdge("eskalator 32 3", "eskalator 23 3") 
+        g.removeEdge("eskalator 34 1", "eskalator 43 1") 
+        g.removeEdge("eskalator 43 1", "eskalator 34 1") 
+        g.removeEdge("eskalator 34 2", "eskalator 43 2") 
+        g.removeEdge("eskalator 43 2", "eskalator 34 2") 
+        g.removeEdge("eskalator 34 3", "eskalator 43 3") 
+        g.removeEdge("eskalator 43 3", "eskalator 34 3") 
+
+        # Add edges that connect elevators
+        g.addEdge("lift G 1", "lift 1 1", 9)
+        g.addEdge("lift G 2", "lift 1 2", 9)
+        g.addEdge("lift 1 1", "lift G 1", 9)
+        g.addEdge("lift 1 2", "lift G 2", 9)
+        g.addEdge("lift 1 1", "lift 2 1", 9)
+        g.addEdge("lift 1 2", "lift 2 2", 9) 
+        g.addEdge("lift 2 1", "lift 1 1", 9)
+        g.addEdge("lift 2 2", "lift 1 2", 9)
+        g.addEdge("lift 2 1", "lift 3 1", 9)
+        g.addEdge("lift 2 2", "lift 3 2", 9)
+        g.addEdge("lift 3 1", "lift 2 1", 9) 
+        g.addEdge("lift 3 2", "lift 2 2", 9) 
+        g.addEdge("lift 3 1", "lift 4 1", 9) 
+        g.addEdge("lift 3 2", "lift 4 2", 9) 
+        g.addEdge("lift 4 1", "lift 3 1", 9) 
+        g.addEdge("lift 4 2", "lift 3 2", 9) 
+
+        dist_lift, path = g.dijkstra(data1, data2) # Dijkstra's Algorithm
+        path_lift = [] # Route details to be displayed for elevator
+        before = after = data1
+        if (path is not None):
+            print(path)
+
+            for place in path:
+                # Add detailed route info to be displayed
+                if (len(place) > 2):
+                    after = place
+                    if (place == before):
+                        path_lift.append([place, 0, places[place]["lvl"]])
+                    else:
+                        dist, _ = g.dijkstra(before, after)
+                        path_lift.append([place, dist[after], places[place]["lvl"]])
+                
+                    before = place
+
+                print(places[place]["lvl"])
+                print(place)
+
+                # Add route points to be drawn on map
+                route_elev[places[place]["lvl"]].append([places[place]["lat"], places[place]["lon"]])
+            
+        print("elevator route", route_elev)
+        print(dist_lift[data2])
+
+        # Data for the elevator route
+        lift = {
+            "rute": route_elev,
+            "dur": dist_lift[data2],
+            "path": path_lift
+        }
+
         # Response data 
         resp = {
             "eskalator": eskalator,
+            "lift": lift,
             "goal": goal,
             "start": start,
             "level": same_floor
