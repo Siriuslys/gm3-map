@@ -241,6 +241,35 @@ g.addVertex("s")
 g.addVertex("t")
 g.addVertex("tt")
 
+#---------------------- 4th Floor ----------------------#
+g.addVertex("Timezone GM3")
+g.addVertex("ATM BCA GM3")
+g.addVertex("Bakmi GM")
+g.addVertex("Fusia")
+g.addVertex("Ichiban Sushi")
+g.addVertex("Steak 21")
+g.addVertex("Food Court")
+g.addVertex("Poke Theory")
+g.addVertex("Burger King")
+g.addVertex("Crunchaus")
+g.addVertex("Jack & John")
+g.addVertex("International Christian Assembly")
+g.addVertex("Shaburi & Kintan")
+g.addVertex("Toilet Lantai 4")
+g.addVertex("uu")
+g.addVertex("vv")
+g.addVertex("yy")
+g.addVertex("ww")
+g.addVertex("xx")
+g.addVertex("u")
+g.addVertex("v")
+g.addVertex("w")
+g.addVertex("eskalator 43 1")
+g.addVertex("eskalator 43 2")
+g.addVertex("eskalator 43 3")
+g.addVertex("lift 4 1")
+g.addVertex("lift 4 2")
+
 # Add Edge
 #---------------------- Ground Floor ----------------------#
 g.addEdge("H&M Lantai G", "Djournal Coffee Bar", 29)
@@ -697,6 +726,82 @@ g.addEdge("GingerSnaps", "tt", 3)
 g.addEdge("tt", "GingerSnaps", 3)
 g.addEdge("tt", "Toilet Lantai 3", 10)
 g.addEdge("Toilet Lantai 3", "tt", 10)
+
+#---------------------- 4th Floor ----------------------#
+g.addEdge("Timezone GM3", "ATM BCA GM3", 11)
+g.addEdge("ATM BCA GM3", "Timezone GM3", 11)
+g.addEdge("ATM BCA GM3", "Bakmi GM", 10)
+g.addEdge("Bakmi GM", "ATM BCA GM3", 10)
+g.addEdge("Timezone GM3", "eskalator 43 1", 7)
+g.addEdge("eskalator 43 1", "Timezone GM3", 7)
+g.addEdge("Timezone GM3", "lift 4 1", 17)
+g.addEdge("lift 4 1", "Timezone GM3", 17)
+g.addEdge("lift 4 1", "u", 5)
+g.addEdge("u", "lift 4 1", 5)
+g.addEdge("u", "Ichiban Sushi", 8)
+g.addEdge("Ichiban Sushi", "u", 8)
+g.addEdge("Timezone GM3", "v", 8)
+g.addEdge("v", "Timezone GM3", 8)
+g.addEdge("v", "Ichiban Sushi", 18)
+g.addEdge("Ichiban Sushi", "v", 18)
+g.addEdge("Ichiban Sushi", "Bakmi GM", 11)
+g.addEdge("Bakmi GM", "Ichiban Sushi", 11)
+g.addEdge("Steak 21", "Fusia", 9)
+g.addEdge("Fusia", "Steak 21", 9)
+g.addEdge("Ichiban Sushi", "Steak 21", 14)
+g.addEdge("Steak 21", "Ichiban Sushi", 14)
+g.addEdge("Bakmi GM", "w", 4)
+g.addEdge("w", "Bakmi GM", 4)
+g.addEdge("w", "Fusia", 17)
+g.addEdge("Fusia", "w", 17)
+g.addEdge("Fusia", "eskalator 43 2", 14)
+g.addEdge("eskalator 43 2", "Fusia", 14)
+g.addEdge("eskalator 43 2", "ww", 7)
+g.addEdge("ww", "eskalator 43 2", 7)
+g.addEdge("ww", "Food Court", 29)
+g.addEdge("Food Court", "ww", 29)
+g.addEdge("Fusia", "xx", 21)
+g.addEdge("xx", "Fusia", 21)
+g.addEdge("xx", "Food Court", 34)
+g.addEdge("Food Court", "xx", 34)
+g.addEdge("Steak 21", "ww", 15)
+g.addEdge("ww", "Steak 21", 15)
+g.addEdge("Food Court", "Poke Theory", 24)
+g.addEdge("Poke Theory", "Food Court", 24)
+g.addEdge("Poke Theory", "Burger King", 13)
+g.addEdge("Burger King", "Poke Theory", 13)
+g.addEdge("Burger King", "Crunchaus", 10)
+g.addEdge("Crunchaus", "Burger King", 10)
+g.addEdge("Crunchaus", "Jack & John", 8)
+g.addEdge("Jack & John", "Crunchaus", 8)
+g.addEdge("Jack & John", "International Christian Assembly", 7)
+g.addEdge("International Christian Assembly", "Jack & John", 7)
+g.addEdge("Shaburi & Kintan", "International Christian Assembly", 5)
+g.addEdge("International Christian Assembly", "Shaburi & Kintan", 5)
+g.addEdge("Food Court", "Shaburi & Kintan", 33)
+g.addEdge("Shaburi & Kintan", "Food Court", 33)
+g.addEdge("Crunchaus", "eskalator 43 3", 3)
+g.addEdge("eskalator 43 3", "Crunchaus", 3)
+g.addEdge("Burger King", "eskalator 43 3", 8)
+g.addEdge("eskalator 43 3", "Burger King", 8)
+g.addEdge("Jack & John", "eskalator 43 3", 8)
+g.addEdge("eskalator 43 3", "Jack & John", 8)
+g.addEdge("lift 4 2", "vv", 5)
+g.addEdge("vv", "lift 4 2", 5)
+g.addEdge("vv", "Shaburi & Kintan", 5)
+g.addEdge("Shaburi & Kintan", "vv", 5)
+g.addEdge("ww", "yy", 24)
+g.addEdge("yy", "ww", 24)
+g.addEdge("yy", "uu", 14)
+g.addEdge("uu", "yy", 14)
+g.addEdge("Toilet Lantai 4", "uu", 6)
+g.addEdge("uu", "Toilet Lantai 4", 6)
+g.addEdge("uu", "Poke Theory", 6)
+g.addEdge("Poke Theory", "uu", 6)
+g.addEdge("Poke Theory", "vv", 25)
+g.addEdge("vv", "Poke Theory", 25)
+g.addEdge("vv", "Food Court", 29)
+g.addEdge("Food Court", "vv", 29)
 
 # Add location details (floor, latitude, longitude)
 places = {
@@ -1524,4 +1629,140 @@ places = {
         "lat": -7.276231456084858,
         "lon": 112.7803569094794
     },
+    # 4th Floor
+    "Timezone GM3": {
+        "lvl": 4,
+        "lat": -7.276835382617037,
+        "lon": 112.77991899745166
+    },
+    "ATM BCA GM3": {
+        "lvl": 4,
+        "lat": -7.276886564062707,
+        "lon": 112.78002510027386
+    },
+    "Bakmi GM": {
+        "lvl": 4,
+        "lat": -7.276850856591452,
+        "lon": 112.78012179249453
+    },
+    "Fusia": {
+        "lvl": 4,
+        "lat": -7.276791691390883,
+        "lon": 112.78033101091074
+    },
+    "Ichiban Sushi": {
+        "lvl": 4,
+        "lat": -7.276754756646113,
+        "lon": 112.78013196335945
+    },
+    "Steak 21": {
+        "lvl": 4,
+        "lat": -7.276741493565552,
+        "lon": 112.78028177371885
+    },
+    "Food Court": {
+        "lvl": 4,
+        "lat": -7.276325449573079,
+        "lon": 112.78053807654709
+    },
+    "Poke Theory": {
+        "lvl": 4,
+        "lat": -7.27609540394144,
+        "lon": 112.78041259733271
+    },
+    "Burger King": {
+        "lvl": 4,
+        "lat": -7.275959907369568,
+        "lon": 112.7804413082946
+    },
+    "Crunchaus": {
+        "lvl": 4,
+        "lat": -7.275882699739967,
+        "lon": 112.78051056380372
+    },
+    "Jack & John": {
+        "lvl": 4,
+        "lat": -7.2758836080295595,
+        "lon": 112.78059387329387
+    },
+    "International Christian Assembly": {
+        "lvl": 4,
+        "lat": -7.275935496552748,
+        "lon": 112.78064569299818
+    },
+    "Shaburi & Kintan": {
+        "lvl": 4,
+        "lat": -7.2759881946828955,
+        "lon": 112.78067207619887
+    },
+    "vv": {
+        "lvl": 4,
+        "lat": -7.27604444136054,
+        "lon": 112.7806797822513
+    },
+    "yy": {
+        "lvl": 4,
+        "lat": -7.27631767331593,
+        "lon": 112.7804365102603
+    },
+    "ww": {
+        "lvl": 4,
+        "lat": -7.276579642477941,
+        "lon": 112.7803563417454
+    },
+    "xx": {
+        "lvl": 4,
+        "lat": -7.2766887679107555,
+        "lon": 112.78053655031181
+    },
+    "u": {
+        "lvl": 4,
+        "lat": -7.276720386296816,
+        "lon": 112.78005106519953
+    },
+    "v": {
+        "lvl": 4,
+        "lat": -7.276747700734148,
+        "lon": 112.77994223158618
+    },
+    "w": {
+        "lvl": 4,
+        "lat": -7.276812971655744,
+        "lon": 112.78014972659736
+    },
+    "uu": {
+        "lvl": 4,
+        "lat": -7.276163697166268,
+        "lon": 112.78043117944338
+    },
+    "eskalator 43 1": {
+        "lvl": 4,
+        "lat": -7.276770756009853,
+        "lon": 112.77995845531092
+    },
+    "eskalator 43 2": {
+        "lvl": 4,
+        "lat": -7.2766389667683455,
+        "lon": 112.78037652379595
+    },
+    "eskalator 43 3": {
+        "lvl": 4,
+        "lat": -7.275914733743548,
+        "lon": 112.78052020017265
+    },
+    "lift 4 1": {
+        "lvl": 4,
+        "lat": -7.2766851943134725,
+        "lon": 112.78001075937641
+    },
+    "lift 4 2": {
+        "lvl": 4,
+        "lat": -7.276050955785209,
+        "lon": 112.78073245341051
+    },
+    "Toilet Lantai 4": {
+        "lvl": 4,
+        "lat": -7.276156337370736,
+        "lon": 112.78036642706195
+    }
 }
