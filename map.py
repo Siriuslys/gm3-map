@@ -1766,3 +1766,130 @@ places = {
         "lon": 112.78036642706195
     }
 }
+
+#################################################################################
+app = Flask(__name__)
+
+# Home route of the website
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Receiving data from the website
+@app.route('/process_data', methods=['POST'])
+def process_data():
+    data = request.json.get('data')  # Get the data
+    if len(data) == 2:
+        # Initialization
+        route_esca = [[], [], [], [], []]  # Routes to be drawn for escalator
+        route_elev = [[], [], [], [], []]  # Routes to be drawn for elevator
+        start = []  # Store start point
+        goal = []  # Store destination point
+        same_floor = 0  # Flag to mark whether both points are on the same floor (0 = no, 1 = yes)
+        data1, data2 = data  # data1 = start point, data2 = destination point
+
+        ################## Escalator ##################
+        # Remove edges that connect the elevator
+        g.removeEdge("lift G 1", "lift 1 1")
+        g.removeEdge("lift G 2", "lift 1 2")
+        g.removeEdge("lift 1 1", "lift G 1")
+        g.removeEdge("lift 1 2", "lift G 2")
+        g.removeEdge("lift 1 1", "lift 2 1")
+        g.removeEdge("lift 1 2", "lift 2 2") 
+        g.removeEdge("lift 2 1", "lift 1 1")
+        g.removeEdge("lift 2 2", "lift 1 2")
+        g.removeEdge("lift 2 1", "lift 3 1")
+        g.removeEdge("lift 2 2", "lift 3 2")
+        g.removeEdge("lift 3 1", "lift 2 1") 
+        g.removeEdge("lift 3 2", "lift 2 2") 
+        g.removeEdge("lift 3 1", "lift 4 1") 
+        g.removeEdge("lift 3 2", "lift 4 2") 
+        g.removeEdge("lift 4 1", "lift 3 1") 
+        g.removeEdge("lift 4 2", "lift 3 2") 
+
+        # Add edges that connect the escalator
+        g.addEdge("eskalator 1G 3", "eskalator G1 3", 30) 
+        g.addEdge("eskalator G1 3", "eskalator 1G 3", 30) 
+        g.addEdge("eskalator G1 1", "eskalator 1G 1", 30) 
+        g.addEdge("eskalator 1G 1", "eskalator G1 1", 30) 
+        g.addEdge("eskalator G1 2", "eskalator 1G 2", 30) 
+        g.addEdge("eskalator 1G 2", "eskalator G1 2", 30) 
+        g.addEdge("eskalator 12 1", "eskalator 21 1", 30) 
+        g.addEdge("eskalator 21 1", "eskalator 12 1", 30) 
+        g.addEdge("eskalator 12 2", "eskalator 21 2", 30) 
+        g.addEdge("eskalator 21 2", "eskalator 12 2", 30) 
+        g.addEdge("eskalator 12 3", "eskalator 21 3", 30) 
+        g.addEdge("eskalator 21 3", "eskalator 12 3", 30) 
+        g.addEdge("eskalator 23 1", "eskalator 32 1", 30) 
+        g.addEdge("eskalator 32 1", "eskalator 23 1", 30) 
+        g.addEdge("eskalator 23 2", "eskalator 32 2", 30) 
+        g.addEdge("eskalator 32 2", "eskalator 23 2", 30) 
+        g.addEdge("eskalator 23 3", "eskalator 32 3", 30) 
+        g.addEdge("eskalator 32 3", "eskalator 23 3", 30) 
+        g.addEdge("eskalator 34 1", "eskalator 43 1", 30) 
+        g.addEdge("eskalator 43 1", "eskalator 34 1", 30) 
+        g.addEdge("eskalator 34 2", "eskalator 43 2", 30) 
+        g.addEdge("eskalator 43 2", "eskalator 34 2", 30) 
+        g.addEdge("eskalator 34 3", "eskalator 43 3", 30) 
+        g.addEdge("eskalator 43 3", "eskalator 34 3", 30) 
+
+        dist_eska, path = g.dijkstra(data1, data2)  # Dijkstra Algorithm
+        path_eska = []  # Path to be displayed for escalator
+        before = after = data1
+        if path is not None:
+            # Check if they are on the same floor
+            if places[data1]["lvl"] == places[data2]["lvl"]:
+                same_floor = 1
+            print(path)
+        
+            for place in path:
+                # Add path details to be displayed
+                if len(place) > 2:
+                    after = place
+                    if place == before:
+                        path_eska.append([place, 0, places[place]["lvl"]])
+                    else:
+                        dist, _ = g.dijkstra(before, after)
+                        path_eska.append([place, dist[after], places[place]["lvl"]])
+                    before = place
+
+                print(places[place]["lvl"])
+                print(place)
+
+                # Add path to be drawn
+                route_esca[places[place]["lvl"]].append([places[place]["lat"], places[place]["lon"]])
+            
+            # Add start point details
+            start.append(places[path[0]]["lat"])
+            start.append(places[path[0]]["lon"])
+            start.append(places[path[0]]["lvl"])
+            
+            # Add destination point details
+            goal.append(places[path[-1]]["lat"])
+            goal.append(places[path[-1]]["lon"])
+            goal.append(places[path[-1]]["lvl"])
+            
+        print("escalator route", route_esca)
+        print(dist_eska[data2])
+        
+        # Data for escalator route
+        eskalator = {
+            "rute": route_esca,
+            "dur": dist_eska[data2],
+            "path": path_eska
+        }
+
+        # Response data 
+        resp = {
+            "eskalator": eskalator,
+            "goal": goal,
+            "start": start,
+            "level": same_floor
+        }
+
+        return jsonify(resp)
+    else:
+        return "Received data is invalid"
+
+if __name__ == '__main__':
+    app.run()
