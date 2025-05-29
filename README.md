@@ -7,6 +7,10 @@ GM3 Mall Pathfinder
 
 | Name    | Student ID   | Class  |
 |---------|--------------|--------|
-| Karina  | 50252210     | DAA-D  |
-| Audrey  | 50252210     | DAA-D  |
+| Karina  | 5025221041   | DAA-D  |
+| Audrey  | 5025221055   | DAA-D  |
 | Pelangi | 5025221051   | DAA-K  |
+
+## Report
+
+[View the Report on Google Drive](https://drive.google.com/drive/folders/1esLJwA9sD9dR0hKJk24DhGp9P-EQxSN-?usp=sharing)
