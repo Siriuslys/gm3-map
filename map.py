@@ -199,6 +199,48 @@ g.addVertex("dd")
 g.addVertex("ss")
 g.addVertex("Toilet Lantai 2")
 
+#---------------------- 3rd Floor ----------------------#
+g.addVertex("Jiggle Jungle")
+g.addVertex("Reformed Exodus Community")
+g.addVertex("Magal Korean BBQ")
+g.addVertex("Saga Japanese Restaurant")
+g.addVertex("LinCafe")
+g.addVertex("BonCafe")
+g.addVertex("Natural Farm")
+g.addVertex("Shinjuku")
+g.addVertex("Mi Store")
+g.addVertex("Guardian Plus")
+g.addVertex("Vlife Medical")
+g.addVertex("Huawei")
+g.addVertex("Oppo")
+g.addVertex("House of David")
+g.addVertex("Scoop Ideas")
+g.addVertex("Maison Feerie")
+g.addVertex("Pure Clinic")
+g.addVertex("Puro Clinic")
+g.addVertex("Justice")
+g.addVertex("Samsung")
+g.addVertex("Willio")
+g.addVertex("GingerSnaps")
+g.addVertex("Mothercare")
+g.addVertex("Watsons GM3")
+g.addVertex("Nona Manis")
+g.addVertex("Toilet Lantai 3")
+g.addVertex("eskalator 32 1") 
+g.addVertex("eskalator 32 2") 
+g.addVertex("eskalator 32 3") 
+g.addVertex("eskalator 34 1") 
+g.addVertex("eskalator 34 2") 
+g.addVertex("eskalator 34 3")
+g.addVertex("lift 3 1")
+g.addVertex("lift 3 2")
+g.addVertex("p")
+g.addVertex("q")
+g.addVertex("r")
+g.addVertex("s")
+g.addVertex("t")
+g.addVertex("tt")
+
 # Add Edge
 #---------------------- Ground Floor ----------------------#
 g.addEdge("H&M Lantai G", "Djournal Coffee Bar", 29)
@@ -541,6 +583,120 @@ g.addEdge("ss", "Wee Nam Kee", 6)
 g.addEdge("Wee Nam Kee", "ss", 6)
 g.addEdge("Toilet Lantai 2", "ss", 10)
 g.addEdge("ss", "Toilet Lantai 2", 10)
+
+#---------------------- 3 Floor ----------------------#
+g.addEdge("Jiggle Jungle", "Reformed Exodus Community", 12)
+g.addEdge("Reformed Exodus Community", "Jiggle Jungle", 12)
+g.addEdge("Reformed Exodus Community", "Magal Korean BBQ", 13)
+g.addEdge("Magal Korean BBQ", "Reformed Exodus Community", 13)
+g.addEdge("Magal Korean BBQ", "Saga Japanese Restaurant", 19)
+g.addEdge("Saga Japanese Restaurant", "Magal Korean BBQ", 19)
+g.addEdge("Saga Japanese Restaurant", "LinCafe", 10)
+g.addEdge("LinCafe", "Saga Japanese Restaurant", 10)
+g.addEdge("LinCafe", "BonCafe", 9)
+g.addEdge("BonCafe", "LinCafe", 9)
+g.addEdge("BonCafe", "Guardian Plus", 11)
+g.addEdge("Guardian Plus", "BonCafe", 11)
+g.addEdge("t", "BonCafe", 13)
+g.addEdge("BonCafe", "t", 13)
+g.addEdge("Guardian Plus", "Vlife Medical", 6)
+g.addEdge("Vlife Medical", "Guardian Plus", 6)
+g.addEdge("Vlife Medical", "Huawei", 6)
+g.addEdge("Huawei", "Vlife Medical", 6)
+g.addEdge("Huawei", "Oppo", 6)
+g.addEdge("Oppo", "Huawei", 6)
+g.addEdge("Oppo", "House of David", 6)
+g.addEdge("House of David", "Oppo", 6)
+g.addEdge("Oppo", "Pure Clinic", 15)
+g.addEdge("Pure Clinic", "Oppo", 15)
+g.addEdge("Oppo", "Maison Feerie", 17)
+g.addEdge("Maison Feerie", "Oppo", 17)
+g.addEdge("House of David", "Justice", 6)
+g.addEdge("Justice", "House of David", 6)
+g.addEdge("Justice", "Samsung", 9)
+g.addEdge("Samsung", "Justice", 9)
+g.addEdge("Samsung", "Watsons GM3", 12)
+g.addEdge("Watsons GM3", "Samsung", 12)
+g.addEdge("Nona Manis", "Mothercare", 14)
+g.addEdge("Mothercare", "Nona Manis", 14)
+g.addEdge("Mothercare", "GingerSnaps", 13)
+g.addEdge("GingerSnaps", "Mothercare", 13)
+g.addEdge("GingerSnaps", "Willio", 8)
+g.addEdge("Willio", "GingerSnaps", 8)
+g.addEdge("Willio", "Puro Clinic", 8)
+g.addEdge("Puro Clinic", "Willio", 8)
+g.addEdge("Puro Clinic", "Pure Clinic", 6)
+g.addEdge("Pure Clinic", "Puro Clinic", 6)
+g.addEdge("Pure Clinic", "Maison Feerie", 8)
+g.addEdge("Maison Feerie", "Pure Clinic", 8)
+g.addEdge("Maison Feerie", "Scoop Ideas", 6)
+g.addEdge("Scoop Ideas", "Maison Feerie", 6)
+g.addEdge("Scoop Ideas", "Mi Store", 7)
+g.addEdge("Mi Store", "Scoop Ideas", 7)
+g.addEdge("Shinjuku", "t", 18)
+g.addEdge("t", "Shinjuku", 18)
+g.addEdge("t", "Mi Store", 5)
+g.addEdge("Mi Store", "t", 5)
+g.addEdge("Shinjuku", "Natural Farm", 7)
+g.addEdge("Natural Farm", "Shinjuku", 7)
+g.addEdge("Natural Farm", "Jiggle Jungle", 28)
+g.addEdge("Jiggle Jungle", "Natural Farm", 28)
+g.addEdge("Jiggle Jungle", "eskalator 32 1", 15)
+g.addEdge("eskalator 32 1", "Jiggle Jungle", 15)
+g.addEdge("eskalator 32 1", "lift 3 1", 10)
+g.addEdge("lift 3 1", "eskalator 32 1", 10)
+g.addEdge("eskalator 34 1", "lift 3 1", 12)
+g.addEdge("lift 3 1", "eskalator 34 1", 12)
+g.addEdge("lift 3 1", "Natural Farm", 7)
+g.addEdge("Natural Farm", "lift 3 1", 7)
+g.addEdge("eskalator 32 1", "Reformed Exodus Community", 18)
+g.addEdge("Reformed Exodus Community", "eskalator 32 1", 18)
+g.addEdge("Magal Korean BBQ", "eskalator 32 1", 13)
+g.addEdge("eskalator 32 1", "Magal Korean BBQ", 13)
+g.addEdge("eskalator 34 2", "Maison Feerie", 5)
+g.addEdge("Maison Feerie", "eskalator 34 2", 5)
+g.addEdge("Pure Clinic", "eskalator 34 2", 6)
+g.addEdge("eskalator 34 2", "Pure Clinic", 6)
+g.addEdge("eskalator 34 2", "eskalator 32 2", 7)
+g.addEdge("eskalator 32 2", "eskalator 34 2", 7)
+g.addEdge("eskalator 32 2", "Oppo", 6)
+g.addEdge("Oppo", "eskalator 32 2", 6)
+g.addEdge("Huawei", "eskalator 32 2", 7)
+g.addEdge("eskalator 32 2", "Huawei", 7)
+g.addEdge("eskalator 32 2", "Pure Clinic", 10)
+g.addEdge("Pure Clinic", "eskalator 32 2", 10)
+g.addEdge("eskalator 32 3", "Nona Manis", 2)
+g.addEdge("Nona Manis", "eskalator 32 3", 2)
+g.addEdge("Mothercare", "p", 10)
+g.addEdge("p", "Mothercare", 10)
+g.addEdge("p", "eskalator 32 3", 2)
+g.addEdge("eskalator 32 3", "p", 2)
+g.addEdge("Mothercare", "eskalator 34 3", 5)
+g.addEdge("eskalator 34 3", "Mothercare", 5)
+g.addEdge("eskalator 34 3", "Watsons GM3", 11)
+g.addEdge("Watsons GM3", "eskalator 34 3", 11)
+g.addEdge("Mi Store", "BonCafe", 15)
+g.addEdge("BonCafe", "Mi Store", 15)
+g.addEdge("Watsons GM3", "r", 7)
+g.addEdge("r", "Watsons GM3", 7)
+g.addEdge("r", "q", 9)
+g.addEdge("q", "r", 9)
+g.addEdge("r", "lift 3 2", 8)
+g.addEdge("lift 3 2", "r", 8)
+g.addEdge("Nona Manis", "q", 10)
+g.addEdge("q", "Nona Manis", 10)
+g.addEdge("Pure Clinic", "House of David", 13)
+g.addEdge("House of David", "Pure Clinic", 13)
+g.addEdge("Watsons GM3", "s", 12)
+g.addEdge("s", "Watsons GM3", 12)
+g.addEdge("s", "Mothercare", 3)
+g.addEdge("Mothercare", "s", 3)
+g.addEdge("Willio", "tt", 5)
+g.addEdge("tt", "Willio", 5)
+g.addEdge("GingerSnaps", "tt", 3)
+g.addEdge("tt", "GingerSnaps", 3)
+g.addEdge("tt", "Toilet Lantai 3", 10)
+g.addEdge("Toilet Lantai 3", "tt", 10)
 
 # Add location details (floor, latitude, longitude)
 places = {
@@ -1166,5 +1322,206 @@ places = {
         "lvl": 2,
         "lat": -7.276233167348593,
         "lon": 112.78036345462385
+    },
+    # Lantai 3
+    "Jiggle Jungle": {
+        "lvl": 3,
+        "lat": -7.2768155807522135,
+        "lon": 112.77981203274476
+    },
+    "Reformed Exodus Community": {
+        "lvl": 3,
+        "lat": -7.276920670469963,
+        "lon": 112.77985119964342
+    },
+    "Magal Korean BBQ": {
+        "lvl": 3,
+        "lat": -7.276902572657988,
+        "lon": 112.77998229847361
+    },
+    "Saga Japanese Restaurant": {
+        "lvl": 3,
+        "lat": -7.276819262534914,
+        "lon": 112.78019573939446
+    },
+    "LinCafe": {
+        "lvl": 3,
+        "lat": -7.2768067062172435,
+        "lon": 112.78034097815214
+    },
+    "BonCafe": {
+        "lvl": 3,
+        "lat": -7.276774794363888,
+        "lon": 112.78045280241543
+    },
+    "Natural Farm": {
+        "lvl": 3,
+        "lat": -7.276704393831949,
+        "lon": 112.78008507861017
+    },
+    "Shinjuku": {
+        "lvl": 3,
+        "lat": -7.276710750756692,
+        "lon": 112.78015911783064
+    },
+    "Mi Store": {
+        "lvl": 3,
+        "lat": -7.276632102832224,
+        "lon": 112.7803355059113
+    },
+    "Guardian Plus": {
+        "lvl": 3,
+        "lat": -7.276709325876453,
+        "lon": 112.78053466667228
+    },
+    "Vlife Medical": {
+        "lvl": 3,
+        "lat": -7.276650272627975,
+        "lon": 112.78056177976526
+    },
+    "Huawei": {
+        "lvl": 3,
+        "lat": -7.276585590749917,
+        "lon": 112.7805706154532
+    },
+    "Oppo": {
+        "lvl": 3,
+        "lat": -7.276517770284954,
+        "lon": 112.78058249674416
+    },
+    "House of David": {
+        "lvl": 3,
+        "lat": -7.276450787084471,
+        "lon": 112.7805918863121
+    },
+    "Scoop Ideas": {
+        "lvl": 3,
+        "lat": -7.276557363961814,
+        "lon": 112.78035773868555
+    },
+    "Maison Feerie": {
+        "lvl": 3,
+        "lat": -7.2765074076917955,
+        "lon": 112.78039719423464
+    },
+    "Pure Clinic": {
+        "lvl": 3,
+        "lat": -7.276441246523206,
+        "lon": 112.78044212596126
+    },
+    "Puro Clinic": {
+        "lvl": 3,
+        "lat": -7.276379592572368,
+        "lon": 112.78044967693313
+    },
+    "Justice": {
+        "lvl": 3,
+        "lat": -7.27638543776763,
+        "lon": 112.78060039319831
+    },
+    "Samsung": {
+        "lvl": 3,
+        "lat": -7.276280054241553,
+        "lon": 112.78061587802091
+    },
+    "Willio": {
+        "lvl": 3,
+        "lat": -7.2762974805384175,
+        "lon": 112.78045960484764
+    },
+    "GingerSnaps": {
+        "lvl": 3,
+        "lat": -7.276218280056312,
+        "lon": 112.78047118741506
+    },
+    "Mothercare": {
+        "lvl": 3,
+        "lat": -7.276072583778202,
+        "lon": 112.78049628837323
+    },
+    "Watsons GM3": {
+        "lvl": 3,
+        "lat": -7.276158821164358,
+        "lon": 112.78063212731763
+    },
+    "Nona Manis": {
+        "lvl": 3,
+        "lat": -7.2759244360052975,
+        "lon": 112.78052488169988
+    },
+    "eskalator 32 1": {
+        "lvl": 3,
+        "lat": -7.276764447523618,
+        "lon": 112.7799571083359
+    },
+    "eskalator 32 2": {
+        "lvl": 3,
+        "lat": -7.276528777251087,
+        "lon": 112.78052305072418
+    },
+    "eskalator 32 3": {
+        "lvl": 3,
+        "lat": -7.27593611346289,
+        "lon": 112.78053035672269
+    },
+    "eskalator 34 1": {
+        "lvl": 3,
+        "lat": -7.276746661091991,
+        "lon": 112.78011624461203
+    },
+    "eskalator 34 2": {
+        "lvl": 3,
+        "lat": -7.2765032092432875,
+        "lon": 112.7804546893666
+    },
+    "eskalator 34 3": {
+        "lvl": 3,
+        "lat": -7.276093968300472,
+        "lon": 112.7805269946881
+    },
+    "lift 3 1": {
+        "lvl": 3,
+        "lat": -7.276683296924531,
+        "lon": 112.78000978020265
+    },
+    "lift 3 2": {
+        "lvl": 3,
+        "lat": -7.276080470184809,
+        "lon": 112.7807317850224
+    },
+    "p": {
+        "lvl": 3,
+        "lat": -7.275943539344524,
+        "lon": 112.78050295489646
+    },
+    "q": {
+        "lvl": 3,
+        "lat": -7.275968394003243,
+        "lon": 112.78063783383567
+    },
+    "r": {
+        "lvl": 3,
+        "lat": -7.276067713553303,
+        "lon": 112.78064511852881
+    },
+    "s": {
+        "lvl": 3,
+        "lat": -7.276094932115541,
+        "lon": 112.7805122393861
+    },
+    "t": {
+        "lvl": 3,
+        "lat": -7.276688034426414,
+        "lon": 112.78034095702168
+    },
+    "tt": {
+        "lvl": 3,
+        "lat": -7.2762454283089255,
+        "lon": 112.78046489950918
+    },
+    "Toilet Lantai 3": {
+        "lvl": 3,
+        "lat": -7.276231456084858,
+        "lon": 112.7803569094794
     },
 }
